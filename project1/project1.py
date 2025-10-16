@@ -1,6 +1,7 @@
 import sys
 
-import networkx
+import networkx as nx
+import pandas as pd
 
 
 def write_gph(dag, idx2names, filename):
@@ -10,9 +11,19 @@ def write_gph(dag, idx2names, filename):
 
 
 def compute(infile, outfile):
-    # WRITE YOUR CODE HERE
-    # FEEL FREE TO CHANGE ANYTHING ANYWHERE IN THE CODE
-    # THIS INCLUDES CHANGING THE FUNCTION NAMES, MAKING THE CODE MODULAR, BASICALLY ANYTHING
+    # Read in data / init
+    data = pd.read_csv(infile)
+    vars = list(data.columns)
+    n = len(vars) #number of variables
+    dag = nx.DiGraph()
+
+    # Fix an ordering of nodes
+    fixed_order = list(range(n))
+
+    # Iterate though nodes
+    
+    # Iterate through parent possibilities
+    # Add parents to current node
     pass
 
 
