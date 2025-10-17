@@ -45,6 +45,12 @@ def k2Score(data, node, parents):
 
     return score
 
+def total_k2Score(data, dag):
+    total = 0.0
+    for node in dag.nodes():
+        parents = list(dag.predecessors(node))
+        total += k2Score(data, node, parents)
+    return total
 
 def compute(infile, outfile):
     max_parents = 3
@@ -54,6 +60,9 @@ def compute(infile, outfile):
     n = len(vars) #number of variables
     idx2names = {i: name for i, name in enumerate(vars)}
     dag = nx.DiGraph()
+
+    # base model score (no edges)
+    base_score = total_k2Score(data, dag)
 
     # fix an ordering of nodes
     fixed_order = list(range(n))
@@ -67,16 +76,25 @@ def compute(infile, outfile):
         for j in range(i):
             parents_temp = parents + [j]
             score_temp = k2Score(data, node, parents_temp)
-            if len(parents) == max_parents:
-                break
-            elif score_temp > top_score:
-                parents += [j]
+            if score_temp > top_score:
+                parents.append(j)
                 top_score = score_temp
+                if len(parents) >= max_parents:
+                    break
         # add parents to current node
         for parent in parents:
             dag.add_edge(parent, node)
+
+    final_score = total_k2Score(data, dag)
+
     # write off
     write_gph(dag, idx2names, outfile)
+
+    # save scores to .score file
+    scorefile = outfile.replace(".gph", ".score")
+    with open(scorefile, 'w') as f:
+        f.write(f"Base K2 Score (no edges): {base_score}\n")
+        f.write(f"Final K2 Score (learned DAG): {final_score}\n")
     pass
 
 
