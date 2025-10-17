@@ -47,8 +47,8 @@ def k2Score(data, node, parents):
 
 def total_k2Score(data, dag):
     total = 0.0
-    for node in dag.nodes():
-        parents = list(dag.predecessors(node))
+    for node in range(len(data.columns)):
+        parents = list(dag.predecessors(node)) if node in dag.nodes() else []
         total += k2Score(data, node, parents)
     return total
 
@@ -71,9 +71,9 @@ def compute(infile, outfile):
     for i in fixed_order[:n]:
         node = fixed_order[i]
         parents = []
-        top_score = k2Score(data, node, parents)
         # iterate through potential parents
         for j in range(i):
+            top_score = k2Score(data, node, parents)
             parents_temp = parents + [j]
             score_temp = k2Score(data, node, parents_temp)
             if score_temp > top_score:
@@ -93,8 +93,8 @@ def compute(infile, outfile):
     # save scores to .score file
     scorefile = outfile.replace(".gph", ".score")
     with open(scorefile, 'w') as f:
-        f.write(f"Base K2 Score (no edges): {base_score}\n")
-        f.write(f"Final K2 Score (learned DAG): {final_score}\n")
+        f.write(f"Base Score: {base_score}\n")
+        f.write(f"Dag Score: {final_score}\n")
     pass
 
 
