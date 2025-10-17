@@ -93,8 +93,7 @@ def compute(infile, outfile):
     # save scores to .score file
     scorefile = outfile.replace(".gph", ".score")
     with open(scorefile, 'w') as f:
-        f.write(f"Base Score: {base_score}\n")
-        f.write(f"Dag Score: {final_score}\n")
+        f.write(str(final_score))
     pass
 
 
