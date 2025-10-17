@@ -1,10 +1,10 @@
-# AA228-CS238-Student
+# AA228-CS238-Nanxi_Jiang
 [![AA228/CS238 Gradescope](https://img.shields.io/badge/aa228%2Fcs238-gradescope-green?color=42a0a2)](https://www.gradescope.com/courses/814395)
 
 
 [AA228/CS238: Decision Making under Uncertainty](https://aa228.stanford.edu), Autumn 2025, Stanford University.
 
-This repository provides starter code and data for Projects 1 and 2.
+This repository contains code and data for CS 238 Projects.
 
 ## Project 0: 
 
