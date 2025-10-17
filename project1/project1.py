@@ -1,6 +1,7 @@
 import sys
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 import networkx as nx
 from scipy.special import gammaln
 
@@ -94,8 +95,10 @@ def compute(infile, outfile):
     scorefile = outfile.replace(".gph", ".score")
     with open(scorefile, 'w') as f:
         f.write(str(final_score))
-    pass
 
+    # graph the dag
+    pos = nx.nx_agraph.graphviz_layout(dag, prog="dot")
+    pass
 
 def main():
     if len(sys.argv) != 3:
