@@ -3,6 +3,8 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import networkx as nx
+import time
+
 from scipy.special import gammaln
 
 def write_gph(dag, idx2names, filename):
@@ -88,6 +90,9 @@ def compute(infile, outfile):
 
     final_score = total_k2Score(data, dag)
 
+    # log time
+    end_time = time.time()
+
     # write off
     write_gph(dag, idx2names, outfile)
 
@@ -96,9 +101,18 @@ def compute(infile, outfile):
     with open(scorefile, 'w') as f:
         f.write(str(final_score))
 
-    # graph the dag
-    pos = nx.nx_agraph.graphviz_layout(dag, prog="dot")
-    pass
+    # relabel nodes by variable names
+    dag_named = nx.relabel_nodes(dag, idx2names)
+    pos = nx.spring_layout(dag_named, seed=42)
+
+    plt.figure(figsize=(8, 6))
+    nx.draw(
+        dag_named, pos, with_labels=True, arrows=True,
+        node_size=700, node_color="lightblue",
+        font_size=10, font_weight="bold"
+    )
+    plt.show()
+    return end_time
 
 def main():
     if len(sys.argv) != 3:
@@ -106,7 +120,10 @@ def main():
 
     inputfilename = sys.argv[1]
     outputfilename = sys.argv[2]
-    compute(inputfilename, outputfilename)
+
+    start_time = time.time()
+    end_time = compute(inputfilename, outputfilename)
+    print(f"runtime {end_time - start_time:.3f}")
 
 
 if __name__ == '__main__':
