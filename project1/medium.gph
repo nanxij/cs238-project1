@@ -23,7 +23,10 @@ volatileacidity, freesulfurdioxide
 volatileacidity, density
 volatileacidity, alcohol
 volatileacidity, quality
+citricacid, density
 residualsugar, chlorides
 residualsugar, freesulfurdioxide
 residualsugar, totalsulfurdioxide
+residualsugar, alcohol
 chlorides, quality
+freesulfurdioxide, totalsulfurdioxide

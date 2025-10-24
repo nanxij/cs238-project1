@@ -4,6 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import networkx as nx
 import time
+import math
 
 from scipy.special import gammaln
 
@@ -56,8 +57,8 @@ def total_k2Score(data, dag):
     return total
 
 def compute(infile, outfile):
-    max_parents = 3
     # read in data / init
+    max_parents = 4
     data = pd.read_csv(infile)
     vars = list(data.columns)
     n = len(vars) #number of variables
